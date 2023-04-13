@@ -1,4 +1,4 @@
-import styles from '../styles/banner.module.css'
+import styles from './Banner.module.css'
 
 const Banner = props => {
   return (

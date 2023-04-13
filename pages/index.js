@@ -1,11 +1,25 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import Banner from '@/components/Banner'
+import Card from '@/components/Card'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 
+import coffeeStoresData from '../data/coffee-stores.json'
+
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+export async function getStaticProps(context) {
+  console.log('hi getStaticProps')
+  return {
+    props: {
+      coffeeStores: coffeeStoresData,
+    },
+  }
+}
+
+export default function Home(props) {
+  console.log('props', props)
   const handleOnBannerBtnClick = () => {
     console.log('hi banner button')
   }
@@ -18,7 +32,25 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Banner buttonText="Coffee Connoisseur" handleOnClick={handleOnBannerBtnClick} />
+        <Banner buttonText="View Stores Nearby" handleOnClick={handleOnBannerBtnClick} />
+        <div className={styles.heroImage}>
+          <Image src="/static/hero-image.png" width={700} height={400} alt="Hero Image" />
+        </div>
+        {props.coffeeStores.length > 0 && (
+          <>
+            <h2 className={styles.heading2}>Toronto Stores</h2>
+            <div className={styles.cardLayout}>
+              {props.coffeeStores.map(coffeeStore => (
+                <Card
+                  name={coffeeStore.name}
+                  imgUrl={coffeeStore.imgUrl}
+                  key={coffeeStore.id}
+                  href={`/coffee-store/${coffeeStore.id}`}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </main>
       <footer></footer>
     </div>
