@@ -15,7 +15,7 @@ export async function getStaticProps(context) {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: 'fsq3xucE2FzSN0js72lVuEaLEpLpgAdSm3KYkRdhc2j9qfE=',
+      Authorization: process.env.FOURSQUARE_API_KEY,
     },
   }
 
@@ -24,9 +24,9 @@ export async function getStaticProps(context) {
     options
   )
   const data = await response.json()
-    // .then(response => response.json())
-    // .then(response => console.log(response))
-    // .catch(err => console.error(err))
+  // .then(response => response.json())
+  // .then(response => console.log(response))
+  // .catch(err => console.error(err))
 
   return {
     props: {
